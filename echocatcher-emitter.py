@@ -64,9 +64,10 @@ def main():
         #increment port to eliminate delayed echos
         sock.close()
         port += 1
+        print port
         if port >= port_start + port_range:
             port = port_start
-
+        print port
         print "sleeping..."
         time.sleep(time_between_broadcasts)
 
