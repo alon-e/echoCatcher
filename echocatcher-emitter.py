@@ -3,7 +3,7 @@ import iota
 import time
 import sys
 
-current_milli_time = lambda: int(round(time.time() * 1000))
+current_milli_time = lambda: int(round(time.time() * 1000000))
 
 def main():
     if len(sys.argv)<6:
@@ -17,7 +17,7 @@ def main():
     port = port_start
 
     #window to wait for responses:
-    timeout = float(sys.argv[4]) * 60 * 1000 #miliseconds
+    timeout = float(sys.argv[4]) * 60 * 1000000 #miliseconds
     time_between_broadcasts = float(sys.argv[5]) * 60
     echo_mwm = 16
     iri_api = sys.argv[3]
@@ -49,11 +49,11 @@ def main():
         while current_milli_time() < start + timeout:
             #listen to responses for X time
             try:
-                sock.settimeout((start + timeout - current_milli_time()) / 1000)
+                sock.settimeout((start + timeout - current_milli_time()) / 1000000)
                 data, (s_ip, s_port)  = sock.recvfrom(1024)
                 # measure response times
                 now = current_milli_time()
-                print 'received "%s" from %s:%d' % (data, s_ip, s_port),'after %d ms' % (now - start)
+                print 'received "%s" from %s:%d' % (data, s_ip, s_port),'after %d microsec' % (now - start)
 
                 count+=1
             except:

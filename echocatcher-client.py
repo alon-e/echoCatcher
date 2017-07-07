@@ -45,7 +45,7 @@ def main():
                 message = message.replace('udp://','')
                 ip,port = message.split(':')
                 server_address = (ip, int(port))
-                sent = sock.sendto(ping_msg, server_address)
+                sent = sock.sendto(ping_msg+":"+str(port), server_address)
             except:
                 print "error parsing:",message
 
