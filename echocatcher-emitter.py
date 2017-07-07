@@ -50,10 +50,10 @@ def main():
             #listen to responses for X time
             try:
                 sock.settimeout((start + timeout - current_milli_time()) / 1000)
-                data, (ip, port)  = sock.recvfrom(1024)
+                data, (s_ip, s_port)  = sock.recvfrom(1024)
                 # measure response times
                 now = current_milli_time()
-                print 'received "%s" from %s:%d' % (data, ip, port),'after %d ms' % (now - start)
+                print 'received "%s" from %s:%d' % (data, s_ip, s_port),'after %d ms' % (now - start)
 
                 count+=1
             except:
@@ -64,10 +64,8 @@ def main():
         #increment port to eliminate delayed echos
         sock.close()
         port += 1
-        print port
         if port >= port_start + port_range:
             port = port_start
-        print port
         print "sleeping..."
         time.sleep(time_between_broadcasts)
 
