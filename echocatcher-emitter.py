@@ -3,6 +3,7 @@ import iota
 import time
 import sys
 
+current_milli_time = lambda: int(round(time.time() * 1000))
 
 def main():
     if len(sys.argv)<6:
@@ -16,7 +17,7 @@ def main():
     port = port_start
 
     #window to wait for responses:
-    timeout = float(sys.argv[4]) * 60 * 1000
+    timeout = float(sys.argv[4]) * 60 * 1000 #miliseconds
     time_between_broadcasts = float(sys.argv[5]) * 60
     echo_mwm = 16
     iri_api = sys.argv[3]
@@ -41,16 +42,19 @@ def main():
         # send transaction
         print "sending echo transaction:", ping_address,"..."
         i.send_transfer(3,transfers=[tx],min_weight_magnitude=echo_mwm)
+        start = current_milli_time()
         print "echo sent."
         count = 0
-        start = time.time()
-        while time.time() < start + timeout:
+
+        while current_milli_time() < start + timeout:
             #listen to responses for X time
             try:
-                sock.settimeout((start + timeout - time.time()) / 1000)
+                sock.settimeout((start + timeout - current_milli_time()) / 1000)
                 data, server = sock.recvfrom(1024)
                 # measure response times
-                print 'received "%s"' % data,'after %d seconds' % (time.time() - start)
+                now = current_milli_time()
+                print 'received "%s" from %s' % (data, server),'after %d ms' % (now - start)
+
                 count+=1
             except:
                 if count == 0:
