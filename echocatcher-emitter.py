@@ -50,10 +50,10 @@ def main():
             #listen to responses for X time
             try:
                 sock.settimeout((start + timeout - current_milli_time()) / 1000)
-                data, server = sock.recvfrom(1024)
+                data, (ip, port)  = sock.recvfrom(1024)
                 # measure response times
                 now = current_milli_time()
-                print 'received "%s" from %s' % (data, server),'after %d ms' % (now - start)
+                print 'received "%s" from %s:%d' % (data, ip, port),'after %d ms' % (now - start)
 
                 count+=1
             except:
