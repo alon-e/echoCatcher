@@ -53,7 +53,7 @@ def main():
                 data, (s_ip, s_port)  = sock.recvfrom(1024)
                 # measure response times
                 now = current_milli_time()
-                print 'received "%s" from %s:%d' % (data, s_ip, s_port),'after %d microsec' % (now - start)
+                print 'received "%s" from %s:%d' % (data, s_ip, s_port),'after {:.1f} ms'.format(float(now - start)/1000)
 
                 count+=1
             except:
