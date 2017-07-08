@@ -7,20 +7,20 @@ current_milli_time = lambda: int(round(time.time() * 1000000))
 
 def main():
     if len(sys.argv)<6:
-        print "Usage: echocatcher-emitter.py <hostname> <start-port> <IRI-api> <timeout> <sleep-time>"
+        print "Usage: echocatcher-emitter.py <hostname> <start-port> <port-range> <IRI-api> <timeout> <sleep-time>"
         exit(-1)
 
     #host to broadcast:
     host = sys.argv[1]
     port_start = int(sys.argv[2])
-    port_range = 10
+    port_range = int(sys.argv[3])
     port = port_start
 
     #window to wait for responses:
-    timeout = float(sys.argv[4]) * 60 * 1000000 #miliseconds
-    time_between_broadcasts = float(sys.argv[5]) * 60
+    timeout = float(sys.argv[5]) * 60 * 1000000 #miliseconds
+    time_between_broadcasts = float(sys.argv[6]) * 60
     echo_mwm = 16
-    iri_api = sys.argv[3]
+    iri_api = sys.argv[4]
     i = iota.Iota(iri_api)
 
     print "EchoCatcher emitter started."
