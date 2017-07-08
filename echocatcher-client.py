@@ -1,4 +1,6 @@
 import sys
+
+import time
 import zmq
 import iota
 import socket
@@ -45,7 +47,7 @@ def main():
                 message = message.replace('udp://','')
                 ip,port = message.split(':')
                 server_address = (ip, int(port))
-                sent = sock.sendto(ping_msg+":"+str(port), server_address)
+                sent = sock.sendto(ping_msg+":"+str(port)+":"+'{:.2f}'.format(time.time() - int(timestamp)), server_address)
             except:
                 print "error parsing:",message
 
